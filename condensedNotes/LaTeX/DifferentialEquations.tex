@@ -1,0 +1,607 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{Differential Equations: Condensed Notes}
+\author{Benjamin Cummings}
+\date{May 2025}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{cor}[thm]{Cor}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{properties}[thm]{Properties}
+\newtheorem{example}[thm]{Very Important Example}
+\newtheorem{note}[thm]{Notation}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\begin{defn}[Differential Equations]
+\end{defn}
+\begin{enumerate}
+    \item An Ordinary Differential Equation is an equation of the form:
+    \[\frac{dx}{dt} = f(t, x) \;\text{ with }\; f:I\times\Omega^d \to \Omega^d,\; t \in I, \; x \in \Omega^d\]
+    \item An ODE is called Autonomous if the function $f$ does not depend on $t$. 
+    \item We can write any $n_{th}$ order ODE:
+    \[x^{(n)} = f(t, x, \dot x , . . ., x^{(n-1)})\]
+    as a system first order ODEs, with appropriate substitutions. (So we only have to worry about ODEs in the form $\dot x = f(t, x)$)
+\end{enumerate}
+
+\begin{thm}[Solutions to IVPs]
+\end{thm}
+A solution to an Initial Value Problem $\dot x = f(t, x), \; x(t_0) = x_0$ is a differentiable function $\lambda(t) : I \to \mathbb{R}^d$ which satisfies the solution identity:
+\[\frac{d\lambda}{dt} = f(t, \lambda(t)) \;\;\;\forall t \in I \text{ and } \lambda(t_0) = x_0\]
+$I$ is the time interval which $\lambda (t)$ is defined on with $t_0 \in I$.
+By the fundamental theorem of calculus we have:
+\[\int_{t_0}^t\frac{d\lambda}{ds}ds = \int_{t_0}^tf(s, \lambda (s)) \:ds \implies \lambda(t) = x_0 + \int_{t_0}^tf(s, \lambda (s)) \:ds\]
+
+\newpage
+\section{Existence and Uniqueness}
+
+\subsection{The Picard-Lindeloff Theorem}
+
+\begin{defn}[Lipschitz Continuity]\end{defn}
+A function $f$ is called Lipschitz Continuous if $\exists K >0$ st:
+\[\| f(x) - f(y)\| \leq K \| x - y\| \;\; \forall x,y \in D\]
+\begin{thm}[Banach's Fixed Point Theorem]
+\end{thm}
+A function $f$ is called a contraction if $\exists K \in (0, 1)$ st:
+\[\| f(x) - f(y)\| \leq K \| x - y\| \;\; \forall x,y \in D\]
+
+\begin{defn}[Picard's Iterates]
+\end{defn}
+To find a solution $\lambda$ to the solution identity:
+ \[\lambda(t) = x_0 + \int_{t_0}^tf(s, \lambda (s)) \:ds\]
+we see if the sequence of functions:
+\[\lambda_0(t) = x_0, \;\;\lambda_{n + 1}(t) =  x_0 + \int_{t_0}^tf(s, \lambda_n (s)) \:ds\]
+Converges uniformly to some $\lambda_\infty(t)$, then $\lambda_\infty(t)$ satisfies the solution identity:
+\[\lambda_\infty(t) =  x_0 + \int_{t_0}^tf(s, \lambda_\infty (s)) \:ds\]
+and hence, it is a unique solution to the IVP.
+
+\begin{thm}[Picard-Lindeloff Theorem]\end{thm}
+\begin{enumerate}
+    \item If $f(t, x)$ is globally Lipschitz Continuous ie: $\exists K > 0$ st
+    \[\| f(t,x) - f(t,y)\| \leq K \| x - y\| \;\; \forall (t,x),(t,y) \in D\]
+    Then every IVP $x(t_0) = x_0$ has a unique solution on the interval:
+    \[I = [t_0-\frac{1}{2K}, t_0 +\frac{1}{2K}]\]
+    We can actually extend each of these unique solutions to a solution on the whole time interval by applying this very theorem to the IVP $x(t_0 + \frac{1}{2K}) = \lambda(t_0 + \frac{1}{2K})$.
+
+    \item If $f(t, x)$ is only locally Lipschitz Continuous ie: $\exists U \subset D$ around $(t_0, x_0)$ and $K > 0$ st
+    \[\| f(t,x) - f(t,y)\| \leq K \| x - y\| \;\; \forall (t,x),(t,y) \in U\]
+    Then we have a solution $\lambda(t):I \to \mathbb{R}^d$ which depending on the initial condition. ie. we cant find a solution to $\dot x = \frac{1}{x}$ local to $x_0 = 0$
+
+    \item If $f(t, x)$ is continuously differentiable, then it is locally Lipschitz Continuous somewhere. The derivative is continuous so we can just take any interval where it is bounded.
+    
+\end{enumerate}
+
+\subsection{Applications}
+
+\begin{thm}[Constant Solutions]\end{thm}
+\[ \dot x = f(x) \text{ has a constant solution } \lambda(t) = a\iff f(a) = 0\]
+
+\begin{thm}[Solutions do different IVPs cannot touch]\end{thm}
+Consider a differential equation $\dot x = f(t, x)$ with two solutions to different initial value problems $\lambda_1(t)$ and $\lambda_2(t)$ then:
+\[\text{either }\lambda_1(t) = \lambda_2(t) \; \forall t \in I \text{ or }  \lambda_1(t) \neq \lambda_2(t) \;\forall t \in I\]
+ie. we're either talking about the same solution or the two solutions don't touch.
+
+\begin{cor}[Bounding a solution between constant solutions]\end{cor}
+Consider the IVP:
+\[\dot x = (x^2-1)g(x), \; \; x(0) = 0\]
+Looking at the Differential Equation alone, we can see two constant solutions: $x = 1$ and $x = -1$. Now, any maximal solution to the IVP (passes through (0,0)) can't attain the values 1 or -1 otherwise it would be 'absorbed into' the constant solutions.
+ 
+\begin{thm}[Concatenating Solutions]\end{thm}
+\begin{itemize}
+    \item Let $\dot x = f(x)$ reach an equilibrium at $x_0$. ie. $f(x_0) = 0$ st $f(x)$ is not Lipschitz continuous at $x_0$.
+    \item Then, if there are many solutions to the IVP $f(x_0) = 0$, then we can construct infinitely many solutions via concatenation
+\end{itemize}
+
+Consider: $\dot x = \sqrt{|x|}$ with $x(t_0) = 0$
+
+\begin{itemize}
+    \item We have a trivial solution $\lambda(t) = 0$
+    and a general solution attained via seperation of variables: $\lambda(t) = \frac{1}{4}(t-t_0)^2$ for $t_0 > 0$
+    \item we can concatenate the two solutions like so:
+    \[\lambda(t) = \begin{cases}
+        0 & t < b \\
+        \frac{1}{4}(t-b)^2 & t \geq b
+    \end{cases}
+    \]
+    \item the two parts match in value and derivative at $t = b$
+\end{itemize}
+
+\begin{defn}[Maximal Existence Interval]\end{defn}
+Consider an IVP $\dot x = f(t, x)$ with $x(t_0) = x_0$. We define: 
+\[ I^+ = \sup\{t \geq t_0 : \text{ a solution exists on } [t_0, t]\}\]
+\[ I^- = \inf\{t \leq t_0 : \text{ a solution exists on } [t, t_0]\}\]
+We define the Maximal Existence Interval:
+\[I_{max}(t_0, x_0) = (I^-, I^+)\]
+Furthermore, any solution $\lambda_{max}(t, t_0, x_0)$ on $I_{max}(t_0, x_0)$ is called a maximal solution to the IVP $(t_0, x_0)$.
+
+\begin{thm}[Extending to a Maximal Solution]\end{thm}
+If $I^+ < \infty$ then we have two possible behaviours as $t \to \infty$
+\begin{enumerate}
+    \item $\lambda(t)$ approaches the boundary of D (sometimes denoted as $\partial D$).  ie. if $t$ were to increase beyond $I^+$, the solution would go out of bounds.
+    \item $\lambda(t) \to ±\infty$ as $t \to I^+$ ie. the solution has a vertical asymptote at $I^+$
+\end{enumerate}
+The same applies to $I^-$ of course.
+
+\newpage    
+\section{General Solutions}
+
+\begin{defn}[General Solutions]
+\end{defn}
+Typically, we define a general solution as a function of $t$ with constants $t_0$ and $x_0$. Here, we define our general solution:
+\[\lambda(t; t_0, x_0) = \lambda_{max}(t, t_0, x_0)\]
+Note the following 'co-cycle property':
+\[\lambda(t; s, \lambda(s, t_0, x_0)) = \lambda(t; t_0, x_0)\]
+
+\begin{defn}[Flows]
+\end{defn}
+For an autonomous ODE, we can use the co-cycle property to classify each IVP solution by x(0):
+\[\lambda(t; 0, \lambda(0; t_0, x_0)) = \lambda(t; t_0, x_0)\]
+This allows us to clean up the notation. The flow of a differential equation $\varphi$ is defined by:
+\[\varphi(t, x) = \lambda(t; 0, x)\]
+A more intuitive syntax would be $\varphi_x(t)$ which is the solution that 'starts at $x$' as a function of $t$
+
+\begin{thm}[Flows are Group Actions on D]
+\end{thm}
+The flow $\varphi: \mathbb{R} \times X \to X$ for $X \subset \mathbb{R}^d$ is, in fact, a group action on the Group $(\mathbb{R}, +)$ (the time parameter):
+\begin{enumerate}
+    \item $\varphi(0, x) = x$ (Identity)
+    \item $\varphi(t + s, x) = \varphi(t, \varphi(s, x))$ (Compatibility) 
+\end{enumerate}
+
+\subsection{Orbits}
+\begin{defn}[Orbits]
+\end{defn}
+An orbit $O(x)$ is the locus/set of points attained by a flow starting at (or even containing) $x$:
+\[O(x) = \{\varphi(t, x) \in D : t \in I_{max}\}\]
+Note the following properties:
+\begin{enumerate}
+    \item Different IVP orbits do not touch: 
+    \[O(x) = O(y) \iff y = \varphi(t, x) \text{ for some } t \in I_{max}\]
+    
+    \item Orbits are only defined for Autonomous differential equations. Otherwise $O(x)$ wouldn't be well defined.
+    
+    \item Positive and Negative Orbits: 
+    \[O^+ = \{\varphi(t, x) \in D : t \in I_{max}\cap\mathbb{R}_{\geq 0}\}\]
+    \[O^- = \{\varphi(t, x) \in D : t \in I_{max}\cap\mathbb{R}_{\leq 0}\}\]
+
+\end{enumerate}
+
+\begin{defn}[homoclinic and heteroclinic orbits]
+\end{defn}
+\begin{itemize}
+    \item An orbit $O(x)$ is called $\boldsymbol{homoclinic}$ if: 
+    \[ \exists x^* \text{ st } \lim_{t\to\infty}\varphi(t, x) = \lim_{t\to- \infty}\varphi(t, x)  = x^* \]
+    ie. a particle starts and ends at the same equilibrium point. (This does not include the case where $O(x) = \{x^*\}$).
+
+    \item An orbit $O(x)$ is called $\boldsymbol{heteroclinic}$ if: 
+    \[ \exists x_1^* \neq x_2^* \text{ st } \lim_{t\to\infty}\varphi(t, x) = x_2^* \text{ and }\lim_{t\to- \infty}\varphi(t, x)  = x_1^* \]
+    ie. a particle starts at an equilibrium and ends at a different equilibrium.
+    
+\end{itemize}
+\begin{defn}[Invariant Sets]
+\end{defn}
+A set $M \subset D$ is called invariant if:
+\[x \in M \implies O(x) \subset M\]
+ie. M is closed under $\varphi(t, .)$ for arbitrary $t$
+
+\begin{itemize}
+    \item We say that $M$ is positively invariant if:
+    \[x \in M \implies O^+(x) \subset M\]
+    'a particle in $M$ stays in $M$'
+    \item similarly, $M$ is negatively invariant if:
+    \[x \in M \implies O^-(x) \subset M\]
+    'a particle in $M$ has always been in $M$'
+\end{itemize}
+
+\newpage
+\section{Linear Systems}
+\subsection{Matrix Norms}
+\begin{defn}[The Operator Norm of A Matrix]
+\end{defn}
+Let $A \in \mathbb{R}^{n\times m}$:
+\[ \|A\| = \sup \{\| Ax\|: x \in \mathbb{R}^n,\;\|x\| = 1\}\]
+We define the operator norm of a matrix as how far the linear transformation can scale a unit vector
+\begin{thm}[Properties of matrix Norms]\end{thm}
+    \begin{enumerate}
+        \item $\|Ax\| \leq \|A\| \|x\|$
+         \item $\|AB\| \leq \|A\| \|B\|$
+    \end{enumerate}
+
+\begin{thm}[Linear Systems have unique IVP solutions]
+\end{thm}
+\begin{itemize}
+    \item Let $f(x) = Ax$, then $Df(x) = A$ for all $x \in \mathbb{R}$
+    \item It follows that $Df(x)$ is bounded by $\|A\|$ and hence, $f$ globally Lipschitz Continuous.
+\end{itemize}
+
+\subsection{The matrix Exponential}
+\begin{defn}[The Matrix Exponential]\end{defn}
+Recall the Maclaurin series for $e^{tx}$:
+\[e^{tx} = \sum_{n = 0}^\infty \frac{(tx)^n}{n!}\]
+Hence, we can raise e to the power of a matrix by defining $e^{tA}$ as the matrix polynomial:
+\[e^{tA} = \sum_{n = 0}^\infty \frac{t^nA^n}{n!}\]
+
+\begin{thm}[Properties of $e^{tA}$ ]\end{thm}
+\begin{enumerate}
+    \item If $A \sim B$, then $e^{tA} \sim e^{tB}$.  In fact, $A = P^{-1}BP \implies e^{tA} = P^{-1}e^{tB}P$.
+
+    \item $e^{t(A_1 \oplus A_2 \oplus ... \oplus A_n)} = e^{tA_1} \oplus e^{tA_2} \oplus ... \oplus e^{tA_n}$ 
+
+    \item $e^{t(-A)} = e^{-tA} =
+    (e^{tA})^{-1}$ (Matrix Exponential is always invertable)
+
+    \item If $AB = BA$, then $e^{t(A + B)} = e^{tA}e^{tB}$
+\end{enumerate}
+
+\newpage
+\begin{thm}[$e^{tA}$ as a solution]
+\end{thm}
+\begin{itemize}
+    \item Let $\dot x = Ax$ with $x(0) = x_0$. (It follows that $Ax$ is Lipschitz continuous and hence there is a unique solution)
+    
+    \item Then consider the Picard Iterates for $\dot x = Ax$ with $\lambda_0 = x_0$: 
+    \[\lambda_{n + 1}= x_0 + \int^t_0 A\lambda_n(s)\:ds\]
+
+    \item This produces the power series:
+    \[\lambda_{n}= x_0 + tAx_0 + \frac{t^2}{2!} A^2 x_0 + ... + \frac{t^n}{n!} A^n x_0\]
+    \[ \implies \lim_{n\to\infty}\lambda_n(t) = e^{tA}x_0\]
+
+    \item Hence, we've found a solution local to $t = 0$. It follows that this solution exists for all $t \in \mathbb{R}$
+    \[\varphi(t, x) = e^{tA}x \text{ is the flow generated by } \dot x = Ax\]
+
+\end{itemize}
+
+\begin{thm}[Similar matrices represent the same linear system]
+\end{thm}
+\begin{itemize}
+    \item Let $A \sim B$, then $\exists$ invertible $P$ st $A = P^{-1}BP$. Through a substitution $x = Px$:
+    \[\dot x = Bx \implies \dot {Py} = BPy \implies \dot y = P^{-1}BPy \implies \dot y = Ay\]
+
+    Similar matrices represent the same linear transformation under different bases. Thus, a particle traveling through the phase plane of $\dot x = Ax$ will have the same trajectory as $\dot x = Bx$.
+
+    \item Hence, we can characterize every linear system $\dot x = Ax$ by A's Jordan Normal Form. This will also give us clear information about the phase portrait of the system.
+    
+\end{itemize}
+
+\begin{thm}[Flow of a linear system through a change of basis]
+\end{thm}
+\begin{itemize}
+    \item Let $ x(t) = \varphi(t, {x_0})= e^{tA} x_0$, and note that $J = PAP^{-1}$ and  $e^{tJ} = Pe^{tA}P^{-1}$
+    
+    \item Then consider the substitution $\mathbf{x}(t) = P^{-1} \mathbf{y}(t)$:
+
+    \[P^{-1}y(t) = e^{tA}P^{-1} y_0 \implies y(t) = Pe^{tA}P^{-1} y_0 \implies \hat{\varphi}(t, y_0) = y(t) = e^{tJ}y_0\]
+
+    Where vector $y$ is the same as $x$ but with respect to the Jordan Basis.
+
+    \item A special case of this when $A$ is diagonalisable with distinct eigenvalues $\lambda_i$ and eigenvectors $v_i$:
+    \[x(t) = \hat{\varphi}(t, x_0) = c_1e^{\lambda_1 t} + c_2e^{\lambda_2 t} + ... + c_ie^{\lambda_i t} \text{ where $x_0 = c_1v_1 + c_2v_2 + ... + c_iv_i$}\]
+    We rewrite a point on the phase plane in terms of the eigenvector basis and we can see the flow component for each of these eigen vectors.
+    
+\end{itemize}
+\subsection{Jordan Normal Forms}
+\begin{thm}[Matrix Exponential of a Jordan Block]
+\end{thm}
+\begin{itemize}
+    \item Let $J_n(\lambda) = \begin{pmatrix}
+    \lambda & 1 &0 &...&...&0 \\
+    0 & \lambda & 1 & 0 & ... &0 \\
+    \vdots & & \ddots & \ddots &\ddots & \vdots&\\
+    0 &...&...&...&...& 0
+\end{pmatrix} = \begin{pmatrix}
+    \lambda &&& \\
+    &\lambda&&\\
+    &&\ddots&\\
+    &&&\lambda
+\end{pmatrix} + \begin{pmatrix}
+    0&1&&\\
+    &\ddots&\ddots&\\
+    &&0&1\\
+    &&&0
+    
+\end{pmatrix}$
+
+\item Then, $e^{tJ_n(\lambda)} = e^{\lambda t} \begin{pmatrix}
+    1 & t & \frac{t^2}{2!} &...&...& \frac{t^{n-1}}{(n-1)!}\\
+    0 & 1 & t & \frac{t^2}{2!} & ... &\frac{t^{n-2}}{(n-2)!} \\
+    \vdots & & \ddots & \ddots &\ddots & \vdots\\
+    \vdots&&&&&\frac{t^2}{2!}\\
+    \vdots&&&&&t\\
+    0 &...&...&...&...& 1
+\end{pmatrix}$
+\end{itemize}
+Each row $r$ is the first $n-(r - 1)$ terms of the maclaurin expansion of $e^{t}$.
+\begin{thm}[Real form of a complex Diagonal]    
+\end{thm}
+\begin{itemize}
+    \item let $A = \begin{pmatrix}
+        a + ib & 0 \\
+        0 & a - ib
+    \end{pmatrix}$, be a transformation with respect to the basis of eigen vectors: $\{u + iv, u - iv\}$
+
+    \item then $B = \begin{pmatrix}
+        a & b \\
+        -b  & a
+    \end{pmatrix}$ represents the same transformation with respect to $\{u, v\}$
+
+    \item Thus, $\begin{pmatrix}
+        a + ib & 0 \\
+        0 & a - ib
+    \end{pmatrix} \sim \begin{pmatrix}
+        a & b \\
+        -b  & a
+    \end{pmatrix}$
+\end{itemize}
+
+\begin{prop}[Attaining oscillators from complex eigenvalues]
+\end{prop}
+Let $A = \begin{pmatrix}
+    a & b \\
+    -b  & a
+\end{pmatrix}$, then:
+
+\[e^{tA} = e^{ta}\begin{pmatrix}
+    \cos(bt) & \sin(bt) \\
+    -\sin(bt)  & \cos(bt)
+\end{pmatrix}\]
+
+\newpage
+\begin{thm}[The matrix exponential of the Real form of a complex J-block]
+\end{thm}
+\begin{itemize}
+    \item Let $J_n(\lambda)$ be an $n\times n$ Jordan block for a complex eigenvalue $\lambda = a + ib$
+    \item then:
+    \[e^{tJ_n(\lambda)} = e^{\lambda t}\begin{pmatrix}
+        1 & G(t) & \frac{G(t)^2}{2!} &...&...& \frac{G(t)^{n-1}}{(n-1)!}\\
+    0 & 1 & t & \frac{G(t)^2}{2!} & ... &\frac{G(t)^{n-2}}{(n-2)!} \\
+    \vdots & & \ddots & \ddots &\ddots & \vdots\\
+    \vdots&&&&&\frac{G(t)^2}{2!}\\
+    \vdots&&&&&G(t)\\
+    0 &...&...&...&...& 1
+    \end{pmatrix}\]
+    where  $G(t) = \begin{pmatrix}
+        \cos(bt) & \sin(bt)\\
+        -\sin(bt)  & \cos(bt)
+    \end{pmatrix}$
+\end{itemize}
+\subsection{Exponential Growth}
+\begin{defn}[Rate of Exponential Growth]
+\end{defn}
+For a 1-dimensional function $\mu(t) = e^{at}$, we might want to evaluate the rate of exponential growth as $t \to \infty$:
+    \[\lim_{t\to\infty} \frac{\ln(\mu(t))}{t} = \frac{t \ln(e^a)}{t} = a\]
+Now, this is still true if we have a function that is not purely exponential $\mu(t) = t^ne^{at}$:
+    \[ \lim_{t\to\infty} \frac{\ln(\mu(t))}{t} = \frac{n\ln(t) + t\ln(e^a)}{t} = a\]
+    
+\begin{defn}[Lyapunov Exponents]
+\end{defn}
+\begin{itemize}
+    \item Let $\lambda(t) = e^{tA}\begin{pmatrix}
+        x_0\\y_0
+    \end{pmatrix}$ be a solution to an IVP where $(x_0, y_0) \neq (0,0)$
+    \item then, the Lyapunov Exponent:
+    \[ \sigma_{Lyap}(\lambda) = \lim_{t\to\infty}\frac{\ln||\lambda(t)||}{t}\]
+    This will always equal one of the real parts of the eigenvalues of A.
+\end{itemize}
+
+\newpage
+\begin{defn}[Simple and Semi-Simple Eigenvalues]
+\end{defn}
+\begin{itemize}
+    \item An eigenvalue $\lambda$ is Simple if $a(\lambda) = 1$, ie. $\lambda$ corresponds to a single eigenvector
+    
+    \item An eigenvalue $\lambda$ is Semi-Simple if $a(\lambda) = g(\lambda)$
+    ie. each J-block for $\lambda$ has dimension 1 (no trailing 1s above $\lambda$).
+    
+\end{itemize}
+
+\begin{thm}[EigenSpace Decomposition]
+\end{thm}
+\begin{itemize}
+    \item For a Matrix $A_{d\times d}$ we can write $\mathbb{R}^d$ as the direct sum of $A$'s Eigen spaces:
+    \[\mathbb{R}^d = E_1 \:\oplus\: E_2 \:\oplus\: ... \:\oplus\: E_q\]
+    Where each $E_i$ is invariant under flow: 
+    \[x \in E_i \implies \varphi(t, x) = e^{\lambda_i t} (1 + t + t^2 + ...) \in E_i\]
+    Note: This polynomial in $t$ will have degree equal to the $\dim(E_i) + 1$. This arises in the case that $\lambda_i$ is semi-simple but has algebraic multiplicity $? 1$
+
+    \item Hence, if $x \in E_i$, $\sigma_{Lyap} = Re(\lambda_i)$. If a particle is on the eigen-vector line, it's only factor of exponential growth is the eigenvalue $\lambda_i$
+\end{itemize}
+
+\begin{defn}[Exponential Estimate]
+\end{defn}
+Choose $\gamma > \max\{Re \lambda : \lambda \text{ is an eigenvalue for } A\}$
+\begin{itemize}
+    \item Then $\exists K >0$ st 
+    \[||e^{tA}|| \leq Ke^{\gamma t} \; \; \forall t \geq 0\]
+    \item If each eigenvalue $\lambda$ which shares a maximum real part is semi-simple. ie: 
+    \[\forall \lambda \text{ st } Re(\lambda) = \max\{Re \lambda : \lambda \text{ is an eigenvalue for } A \}, \; \lambda \text{ is semi-simple. } \]
+    Then, we can let $\gamma = \max\{Re \lambda : \lambda \text{ is an eigenvalue for } A \}$
+\end{itemize}
+This means that we can always bound our matrix exponential by an exponential function taking the largest Lyapunov Constant.
+
+\newpage
+\section{Non-Linear Systems}
+\subsection{Equilibria and Stability}
+\begin{defn}[Equilibrium Point]
+\end{defn}
+We say that the ODE $\dot x = f(x)$  has an equilibrium at $x^*$ if $f(x^*) = 0$. ie. no movement at $x = x^*$. We now want to characterise the different types of equilibira:
+
+\begin{defn}[Stability] Also called Lyapunov Stability.
+\end{defn}
+An equilibrium $x^*$ is stable if: 
+\[\forall \epsilon > 0, \exists \delta > 0 \text{ st } x \in B_\delta(x^*) \implies \varphi(t,x) \in B_\epsilon(x^*) \;\; \forall t \geq 0\]
+If a particle gets within $\delta$ of the equilibrium point $x^*$, then it stays in the $\epsilon$ neighborhood of $x^*$ forever.
+
+\begin{defn}[Attractive]\end{defn}
+$x^*$ is called attractive if: 
+\[\exists \delta > 0 \text{ st } x \in B_\delta(x^*) \implies \lim_{t\to\infty}\varphi(t,x) = x^* \]
+
+If a particle gets within $\delta$ of the equilibrium point $x^*$ (passes the event horizon), then it gets sucked into $x^*$.
+
+\begin{defn}[Repulsive] \end{defn}
+The opposite of attractive; $x^*$ reppels particles instead of attracting them:
+
+\[\exists \delta > 0 \text{ st } x \in B_\delta(x^*) \implies \lim_{t\to-\infty}\varphi(t,x) = x^*\]
+
+\begin{defn}[Asymptotically Stable]\end{defn}
+$x^*$ is called Asymptotically Stable if it is both stable and attractive
+\begin{itemize}
+    \item A linear system $\dot x = Ax$  is Asymptotically Stable $\iff$ all the eigenvalues of $A$ all have real part $\leq 0$. And the ones = 0 are semi-simple.
+\end{itemize}
+
+\begin{defn}[Exponential Stability]
+\end{defn}
+An equilibrium $x^*$ is called exponentially stable if: $\exists \delta > 0, K \geq 1, \gamma < 0 $ st $ x \in B_\delta(x^*) \implies$
+
+\[|\varphi(t, x) - x^*| \leq Ke^{\gamma t}|x - x^*| \;\; \forall t \geq 0 \]
+\begin{itemize}
+    \item This means that a particle 'accelerates' towards the equilibrium point once it's passed the event horizon.
+    \item Exponential Stability $\implies$ Asymptotic Stability. The converse is not true.
+    \item A linear system $\dot x = Ax$ with $x^* = 0$ has Exponential Stability $\iff$ all the eigenvalues of $A$ have negative real parts $\iff$ $x^*$ is Asymptotically stable. 
+\end{itemize}
+
+\subsection{Linearised Stability}
+
+\begin{defn}[Hyperbolicity]    
+\end{defn}
+A matrix $A$ is called hyperbolic if each of its eigenvalues have a non-zero real part. For $\dot x = f(x)$, we say that an equilibrium $x^*$ is hyperbolic if the Jabcobian $Df(x^*)$ is hyperbolic.
+
+\begin{thm}[Linearised Stability]
+\end{thm}
+\begin{itemize}
+    \item Let $f$ be continuously differentiable in the ODE $\dot x = f(x)$.
+    \item If $x^*$ is a hyperbolic equilibrium, with $Re(\lambda_i) <0\;\; \forall \text{ eigenvalues } \lambda_i \text{ of } Df(x^*)$ then, the equilibrium $x^*$ is Exponentially Stable
+    
+\end{itemize}
+
+\subsection{Stable Sets and Invariance}
+\begin{defn}[Stable and Unstable Sets]\end{defn}
+For an equilibrium $x^*$:
+\begin{itemize}
+    \item The stable set  is defined as: 
+    \[W^s(x^*) = \{x \in D : \lim_{t\to\infty}\varphi(t, x) = x^*\}\]
+    
+    \item The unstable set is defined as: 
+    \[W^u(x^*) = \{x \in D : \lim_{t\to-\infty}\varphi(t, x) = x^*\}\]
+
+    \item Note: If $x^*$ is attractive, then $W^s$ denotes the domain of attraction which is an open set in D.
+\end{itemize}
+
+\begin{thm}[Linear System Decomposition]\end{thm}
+Let $\dot x = Ax$ where $A$ is hyperbolic. We have:
+\[ \mathbb{R}^d = W^s(0) \oplus W^s(0)\]
+
+This means that each $x \in \mathbb{R}^d$ is either being repelled by or attracted to 0. Note: this is not true if A is not hyperbolic, then we introduce the case where we have 0 Lyapunov exponents and hence circular orbits.
+
+\begin{thm}[Asymptotic Stability of Linear Systems]
+\end{thm}
+\begin{enumerate}
+    \item The only point that can be attractive in a linear system is $x^* = 0$
+    \item $x^*  = 0$ is attractive \newline 
+    $\iff$ the real parts of each eigenvalue are all negative \newline
+    $\iff$ $x^*  = 0$ is exponentially stable
+    \item $x^*$ is attractive $\implies$ $x^*$ is globally attractive:
+    \[\forall y \in D, \exists  \gamma> 0 \text{ st } \gamma y \in B_\delta(x)\]
+    \[\text{hence: } \lim_{t\to\infty}e^{tA}y = \frac{1}{\gamma} \lim_{t\to\infty}e^{tA}\gamma y = 0\]
+\end{enumerate}
+
+\subsection{Limit Points and Invariance}
+\begin{defn}[$\alpha$ and  $\omega$ sets]
+\end{defn}
+let $x \in \mathbb{R}^d$, we define:
+\begin{itemize}
+    \item $\omega(x) = \{x_\omega : \exists \text{ sequence } t_n \text{ st } \lim_{t_n\to\infty} \varphi(t_n, x) = x_\omega\}$
+
+    ie. The set of $x$s that occur infinitely many times in the flow defined by $x$ (as time goes forwards)
+
+    \item $\alpha(x) = \{x_\alpha : \exists \text{ sequence } t_n \text{ st } \lim_{t_n\to-\infty} \varphi(t_n, x) = x_\alpha\}$
+    
+
+    ie. The set of $x$s that occur infinitely many times in the flow defined by $x$ (as time goes backwards)
+
+    \item Alternatively: $\omega(x) = \bigcap_{t \geq 0} \overline{O^+(\varphi(t, x))}$ and $\alpha(x) = \bigcap_{t \leq 0} \overline{O^-(\varphi(t, x))}$ (Note: we need to take the intersection of the closures to catch the values $x_w$ which are not attained in finite time)
+    
+\end{itemize}
+
+\begin{thm}[Invariance of $\alpha$ and $\omega$]
+\end{thm}
+\begin{enumerate}
+    \item $\alpha(x)$ and $\omega(x)$ are invariant.
+    \item If $O^+(x)$ is bounded and $\overline{O^+(X)} \subset D$, then $\omega(x)$ is non-empty and compact. 
+    \item Analogously, ff $O^-(x)$ is bounded and $\overline{O^-(X)} \subset D$, then $\alpha(x)$ is non-empty and compact. 
+\end{enumerate}
+
+\newpage
+\subsection{Lyapunov Functions}
+\begin{defn}[Lyapunov Function]
+\end{defn}
+Lyapunov functions are used to describe the energy of a particle local to an equilibrium. A Lyapunov function $V(x)$ is continuously differentiable and has the following properties: 
+\begin{itemize}
+    \item $V(x^*) = 0$ (A particle has zero energy at the equilibrium point) 
+    \item $V(x) > 0 \;\;\forall x \in D$ st $x \neq x^*$
+    \item $\dot V(x) \leq 0 \;\;\forall x \in D$ (see below)
+\end{itemize}
+
+If such a function exists we can use it to verify stability of an equilibrium.
+Note: To find a Lyapunov function, we typically try an ansatz of the form: $V(x) = \alpha x^2 + \beta y^2$ such that $\dot V(x) \leq 0$. 
+
+\begin{defn}[Orbital Derivative]
+\end{defn}
+We define a shorthand for the dot product between the gradient of V with $f$
+\[ \dot V (x) = \nabla V(x)^Tf(x) = \sum \frac{\partial V}{\partial x_i} f_i(x)\]
+Note that $\dot V(x)$ describes the derivative of $V$ along solutions $\mu(t)$ to $\dot x = f(x)$:
+\[\frac{dV}{dt}(\mu(t)) = V'(\mu(t))\dot \mu(t) = \dot V(\mu(t)) \;\;\; \text{ (by the chain rule)}\]
+
+
+\begin{thm}[Lyapunov Stability Theorem]
+\end{thm}
+If there exists a Lyapunov function local to an equilibrium $x^*$, then $x^*$ is Lyapunov Stable.
+
+\begin{thm}[Lyapunov Asymptotic Stability Theorem]
+\end{thm}
+If a Lyapunov Function exists and: 
+\begin{itemize}
+    \item $\dot V(x^*) = 0$
+    \item $\dot V(x) < 0 \;\; \forall x \in D $
+ st $x \neq x^*$ 
+ \end{itemize}
+Then $x^*$ is asymptotically stable.
+
+\begin{defn}[Sublevels of a Lyapunov Function]
+\end{defn}
+\begin{itemize}
+    \item Let $S_c = \{x : V(x) \leq c\}$
+    \item then $S_c$ is positively invariant. 
+\end{itemize}
+Once a particle drops below the energy level c, it cannot 'climb back up.'
+
+\begin{itemize}
+    \item Furthermore, if $S_c$ is compact, then $S_c \subset W^s(x^*)$ (The domain of attraction for $x^*$) 
+\end{itemize}
+
+\begin{thm}[LaSalle's Theorem]\end{thm}
+\[w(x) \subset \{x : \dot V(x) = 0\} \; \; \forall x \in D\]
+This means that any periodic orbit in the system $p \subset \omega(x) \subset \{x : \dot V(x) = 0\}$. Particles that end up in a periodic orbit have constant energy as $t\to\infty$.
+
+\subsection{Poncare-Bendixon Theorem}
+When considering a two-dimensional Non-Linear Autonomous ODE. We can expect relatively predictable behaviour. We can usually classify the different types of $\omega$ sets that occur.
+
+\begin{thm}[Poncare-Bendixon Theorem]
+\end{thm}
+Let $\dot x = f(x)$, $f:D \to \mathbb{R}^d$ with open $D$
+\begin{itemize}
+    \item If $O^+(x) \subset \mathcal{K} \subset D$ for compact $\mathcal{K}$ and $O^+(x)$ has finitely many equilibria:
+    \item Then $\omega(x)$ is either: \begin{enumerate}
+        \item a singleton equilibria $\{x^*\}$
+        \item a periodic orbit
+        \item a set of equilibria and homo/hetero-clinic orbits.
+    \end{enumerate}
+\end{itemize}
+Hence, if $\omega(x)$ contains no equilibria, then it must be a periodic orbit.
+\end{document}
